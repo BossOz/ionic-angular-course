@@ -36,8 +36,8 @@ export class AuthService {
 		if (loginResponse.code === 'LOGGEDIN') {
 			this._isLoggedIn = true;
 			this._currentUser = new User(
-									loginResponse.id, 
-									loginResponse.ssoToken, 
+									loginResponse.id ?? 0, 
+									loginResponse.ssoToken ?? "", 
 									loginResponse.nome ?? "Unknown", 
 									loginResponse.cognome ?? "", 
 									loginResponse.tipo ?? ETipoUtente.Agenzia, 
