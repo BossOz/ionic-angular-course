@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ionic serve",
@@ -10,7 +11,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "dev:updateApi": "ts-node --dir tools updateNaarApi"
+    "dev:updateApi": "ts-node --esm --dir tools updateNaarApi.ts"
   },
   "private": true,
   "dependencies": {

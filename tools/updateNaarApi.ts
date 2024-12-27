@@ -16,16 +16,15 @@
  * --------	---	---------------------------------------------------------
  */
 
-import http from 'http';
-import path from 'path';
-import fs from 'fs';
-import util from 'util';
+import * as http from 'http';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as util from 'util';
 
 const fsWriteFile = util.promisify(fs.writeFile);
 
 // Preambolo da mettere in testa al file .ts che si ottiene con l'import necessario.
-const importCode = `import {ApiClientBase, ApiConfig} from './api-client-base';
-`;
+const importCode = `import {ApiClientBase, ApiConfig} from './api-client-base';`;
 
 const serverUrl = 'http://localhost:4201/';
 const typescriptClientUrl = serverUrl + 'utility/typescript-client';
