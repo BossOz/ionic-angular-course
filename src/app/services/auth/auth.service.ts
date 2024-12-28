@@ -23,9 +23,9 @@ export class AuthService {
 	public async login(username: string, password: string, crossLoginCode?: string): Promise<User | null> {
 
 		const loginData: ILoginRequest = {
-			username,
-			password,
-			crossLoginCode
+			username: username,
+			password: password,
+			crossLoginCode: crossLoginCode
 		};
 		const loginResponse: UserDataResponse = await this.backend.post<UserDataResponse>('auth/login', loginData);
 

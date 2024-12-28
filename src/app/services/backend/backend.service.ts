@@ -5,15 +5,7 @@ import * as uuid from "uuid";
 import { IBackendCallOptions } from "./backend-call-options.interface";
 import { ConfigService } from "../config.service";
 import { lastValueFrom } from "rxjs";
-import { IApiRequest, IErrorResponse, IOkApiResponse } from "./naar-api-client";
-
-export interface IBackendResponse<T> { 
-	result?: string;
-	error?: string,
-	stacktrace?: string,
-	code?: string,
-	values?: string
-}
+import { IApiRequest, IErrorResponse } from "./naar-api-client";
 
 export enum EBackendServiceRequestContentType { 
     ApplicationJson = "application/json",
@@ -53,7 +45,7 @@ export class BackendService {
 		let url: string = this.config.servicesEndpointRoot + urlPart;
         url = url.includes("?") ? url + "&ts=" + uniqueId : url + "?ts=" + uniqueId;
         
-		data = { uniqueID: uniqueId };
+		data = { ...data, uniqueID: uniqueId };
 
 		try {
 			const headers = new HttpHeaders({
