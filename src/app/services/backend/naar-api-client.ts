@@ -148,6 +148,56 @@ export interface IErrorResponse extends IApiResponse {
 	values?: { [key: string]: any; } | null;
 }
 
+export enum ELingua {
+    Italiano = "Italiano",
+    English = "English",
+    Francais = "Francais",
+    Deutsch = "Deutsch",
+    Dutch = "Dutch",
+    Spanish = "Spanish",
+    Portuguese = "Portuguese",
+    Debug = "Debug",
+}
+
+export interface ILocalizedRequest extends IApiRequest {
+    /** Lingua richiesta */
+    lingua: ELingua;
+}
+export class LocalizedRequest extends ApiRequest implements ILocalizedRequest {
+    /** Lingua richiesta */
+    lingua!: ELingua;
+
+    constructor(data?: ILocalizedRequest) {
+        super(data);
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.lingua = _data["lingua"] !== undefined ? _data["lingua"] : <any>null;
+        }
+    }
+
+    static override fromJS(data: any): LocalizedRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new LocalizedRequest();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["lingua"] = this.lingua !== undefined ? this.lingua : <any>null;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface ISiteRequest extends ILocalizedRequest {
+    siteID?: number;
+}
+
+
 export class UserDataResponse extends OkApiResponse implements IUserDataResponse {
 	/** ID in chiaro */
 	id?: number;
@@ -530,4 +580,302 @@ export interface ILoginRequest extends IApiRequest {
     password: string;
     /** Eventuale codice di cross login per impersonare un altro utente */
     crossLoginCode?: string | null;
+}
+
+export class SiteRequest extends LocalizedRequest implements ISiteRequest {
+    siteID?: number;
+
+    constructor(data?: ISiteRequest) {
+        super(data);
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.siteID = _data["siteID"] !== undefined ? _data["siteID"] : <any>null;
+        }
+    }
+
+    static override fromJS(data: any): SiteRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new SiteRequest();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["siteID"] = this.siteID !== undefined ? this.siteID : <any>null;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface ISearchOrdersRequest extends ISiteRequest {
+    offertaID?: number | null;
+    agenziaID?: number | null;
+    impiegatoID?: number | null;
+    soloUtente?: boolean;
+    soloConfermate?: boolean;
+    soloIncomplete?: boolean;
+    soloAnnullate?: boolean;
+    dataCreazione?: string | null;
+    operatore?: EOperatore | null;
+    partenzaDal?: string | null;
+    partenzaAl?: string | null;
+    confermaDal?: string | null;
+    confermaAl?: string | null;
+    descrizione?: string | null;
+    nomePax?: string | null;
+    servizioID?: number | null;
+    partitaIva?: string | null;
+}
+
+export class SearchOrdersRequest extends SiteRequest implements ISearchOrdersRequest {
+    offertaID?: number | null;
+    agenziaID?: number | null;
+    impiegatoID?: number | null;
+    soloUtente?: boolean;
+    soloConfermate?: boolean;
+    soloIncomplete?: boolean;
+    soloAnnullate?: boolean;
+    dataCreazione?: string | null;
+    operatore?: EOperatore | null;
+    partenzaDal?: string | null;
+    partenzaAl?: string | null;
+    confermaDal?: string | null;
+    confermaAl?: string | null;
+    descrizione?: string | null;
+    nomePax?: string | null;
+    servizioID?: number | null;
+    partitaIva?: string | null;
+
+    constructor(data?: ISearchOrdersRequest) {
+        super(data);
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.offertaID = _data["offertaID"] !== undefined ? _data["offertaID"] : <any>null;
+            this.agenziaID = _data["agenziaID"] !== undefined ? _data["agenziaID"] : <any>null;
+            this.impiegatoID = _data["impiegatoID"] !== undefined ? _data["impiegatoID"] : <any>null;
+            this.soloUtente = _data["soloUtente"] !== undefined ? _data["soloUtente"] : <any>null;
+            this.soloConfermate = _data["soloConfermate"] !== undefined ? _data["soloConfermate"] : <any>null;
+            this.soloIncomplete = _data["soloIncomplete"] !== undefined ? _data["soloIncomplete"] : <any>null;
+            this.soloAnnullate = _data["soloAnnullate"] !== undefined ? _data["soloAnnullate"] : <any>null;
+            this.dataCreazione = _data["dataCreazione"] !== undefined ? _data["dataCreazione"] : <any>null;
+            this.operatore = _data["operatore"] !== undefined ? _data["operatore"] : <any>null;
+            this.partenzaDal = _data["partenzaDal"] !== undefined ? _data["partenzaDal"] : <any>null;
+            this.partenzaAl = _data["partenzaAl"] !== undefined ? _data["partenzaAl"] : <any>null;
+            this.confermaDal = _data["confermaDal"] !== undefined ? _data["confermaDal"] : <any>null;
+            this.confermaAl = _data["confermaAl"] !== undefined ? _data["confermaAl"] : <any>null;
+            this.descrizione = _data["descrizione"] !== undefined ? _data["descrizione"] : <any>null;
+            this.nomePax = _data["nomePax"] !== undefined ? _data["nomePax"] : <any>null;
+            this.servizioID = _data["servizioID"] !== undefined ? _data["servizioID"] : <any>null;
+            this.partitaIva = _data["partitaIva"] !== undefined ? _data["partitaIva"] : <any>null;
+        }
+    }
+
+    static override fromJS(data: any): SearchOrdersRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new SearchOrdersRequest();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["offertaID"] = this.offertaID !== undefined ? this.offertaID : <any>null;
+        data["agenziaID"] = this.agenziaID !== undefined ? this.agenziaID : <any>null;
+        data["impiegatoID"] = this.impiegatoID !== undefined ? this.impiegatoID : <any>null;
+        data["soloUtente"] = this.soloUtente !== undefined ? this.soloUtente : <any>null;
+        data["soloConfermate"] = this.soloConfermate !== undefined ? this.soloConfermate : <any>null;
+        data["soloIncomplete"] = this.soloIncomplete !== undefined ? this.soloIncomplete : <any>null;
+        data["soloAnnullate"] = this.soloAnnullate !== undefined ? this.soloAnnullate : <any>null;
+        data["dataCreazione"] = this.dataCreazione !== undefined ? this.dataCreazione : <any>null;
+        data["operatore"] = this.operatore !== undefined ? this.operatore : <any>null;
+        data["partenzaDal"] = this.partenzaDal !== undefined ? this.partenzaDal : <any>null;
+        data["partenzaAl"] = this.partenzaAl !== undefined ? this.partenzaAl : <any>null;
+        data["confermaDal"] = this.confermaDal !== undefined ? this.confermaDal : <any>null;
+        data["confermaAl"] = this.confermaAl !== undefined ? this.confermaAl : <any>null;
+        data["descrizione"] = this.descrizione !== undefined ? this.descrizione : <any>null;
+        data["nomePax"] = this.nomePax !== undefined ? this.nomePax : <any>null;
+        data["servizioID"] = this.servizioID !== undefined ? this.servizioID : <any>null;
+        data["partitaIva"] = this.partitaIva !== undefined ? this.partitaIva : <any>null;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export class SearchOrdersResponse extends OkApiResponse implements ISearchOrdersResponse {
+    trips?: OrderListRow[];
+
+    constructor(data?: ISearchOrdersResponse) {
+        super(data);
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["trips"])) {
+                this.trips = [] as any;
+                for (let item of _data["trips"])
+                    this.trips!.push(OrderListRow.fromJS(item));
+            }
+            else {
+                this.trips = <any>null;
+            }
+        }
+    }
+
+    static override fromJS(data: any): SearchOrdersResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new SearchOrdersResponse();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.trips)) {
+            data["trips"] = [];
+            for (let item of this.trips)
+                data["trips"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface ISearchOrdersResponse extends IOkApiResponse {
+    trips?: OrderListRow[];
+}
+
+export class OrderListRow implements IOrderListRow {
+    offertaID?: number;
+    descrizione?: string | null;
+    clienti?: string | null;
+    destinazione?: string | null;
+    creazione?: string;
+    partenza?: string;
+    conferma?: string | null;
+    totale?: number;
+    agenzia?: string | null;
+    telefono?: string | null;
+    email?: string | null;
+    categoriaAgenzia?: string | null;
+    impiegato?: string | null;
+    utentePreventivo?: string | null;
+    utenteConferma?: string | null;
+    annullataTO?: boolean;
+    annullataADV?: boolean;
+    sales?: string | null;
+    pagamento?: string | null;
+    saldato?: number;
+    compensato?: number;
+    saldare?: number;
+    duplicabileAgenzia?: boolean;
+    coverUrl?: string | null;
+
+    constructor(data?: IOrderListRow) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.offertaID = _data["offertaID"] !== undefined ? _data["offertaID"] : <any>null;
+            this.descrizione = _data["descrizione"] !== undefined ? _data["descrizione"] : <any>null;
+            this.clienti = _data["clienti"] !== undefined ? _data["clienti"] : <any>null;
+            this.destinazione = _data["destinazione"] !== undefined ? _data["destinazione"] : <any>null;
+            this.creazione = _data["creazione"] !== undefined ? _data["creazione"] : <any>null;
+            this.partenza = _data["partenza"] !== undefined ? _data["partenza"] : <any>null;
+            this.conferma = _data["conferma"] !== undefined ? _data["conferma"] : <any>null;
+            this.totale = _data["totale"] !== undefined ? _data["totale"] : <any>null;
+            this.agenzia = _data["agenzia"] !== undefined ? _data["agenzia"] : <any>null;
+            this.telefono = _data["telefono"] !== undefined ? _data["telefono"] : <any>null;
+            this.email = _data["email"] !== undefined ? _data["email"] : <any>null;
+            this.categoriaAgenzia = _data["categoriaAgenzia"] !== undefined ? _data["categoriaAgenzia"] : <any>null;
+            this.impiegato = _data["impiegato"] !== undefined ? _data["impiegato"] : <any>null;
+            this.utentePreventivo = _data["utentePreventivo"] !== undefined ? _data["utentePreventivo"] : <any>null;
+            this.utenteConferma = _data["utenteConferma"] !== undefined ? _data["utenteConferma"] : <any>null;
+            this.annullataTO = _data["annullataTO"] !== undefined ? _data["annullataTO"] : <any>null;
+            this.annullataADV = _data["annullataADV"] !== undefined ? _data["annullataADV"] : <any>null;
+            this.sales = _data["sales"] !== undefined ? _data["sales"] : <any>null;
+            this.pagamento = _data["pagamento"] !== undefined ? _data["pagamento"] : <any>null;
+            this.saldato = _data["saldato"] !== undefined ? _data["saldato"] : <any>null;
+            this.compensato = _data["compensato"] !== undefined ? _data["compensato"] : <any>null;
+            this.saldare = _data["saldare"] !== undefined ? _data["saldare"] : <any>null;
+            this.duplicabileAgenzia = _data["duplicabileAgenzia"] !== undefined ? _data["duplicabileAgenzia"] : <any>null;
+            this.coverUrl = _data["coverUrl"] !== undefined ? _data["coverUrl"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any): OrderListRow {
+        data = typeof data === 'object' ? data : {};
+        let result = new OrderListRow();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["offertaID"] = this.offertaID !== undefined ? this.offertaID : <any>null;
+        data["descrizione"] = this.descrizione !== undefined ? this.descrizione : <any>null;
+        data["clienti"] = this.clienti !== undefined ? this.clienti : <any>null;
+        data["destinazione"] = this.destinazione !== undefined ? this.destinazione : <any>null;
+        data["creazione"] = this.creazione !== undefined ? this.creazione : <any>null;
+        data["partenza"] = this.partenza !== undefined ? this.partenza : <any>null;
+        data["conferma"] = this.conferma !== undefined ? this.conferma : <any>null;
+        data["totale"] = this.totale !== undefined ? this.totale : <any>null;
+        data["agenzia"] = this.agenzia !== undefined ? this.agenzia : <any>null;
+        data["telefono"] = this.telefono !== undefined ? this.telefono : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["categoriaAgenzia"] = this.categoriaAgenzia !== undefined ? this.categoriaAgenzia : <any>null;
+        data["impiegato"] = this.impiegato !== undefined ? this.impiegato : <any>null;
+        data["utentePreventivo"] = this.utentePreventivo !== undefined ? this.utentePreventivo : <any>null;
+        data["utenteConferma"] = this.utenteConferma !== undefined ? this.utenteConferma : <any>null;
+        data["annullataTO"] = this.annullataTO !== undefined ? this.annullataTO : <any>null;
+        data["annullataADV"] = this.annullataADV !== undefined ? this.annullataADV : <any>null;
+        data["sales"] = this.sales !== undefined ? this.sales : <any>null;
+        data["pagamento"] = this.pagamento !== undefined ? this.pagamento : <any>null;
+        data["saldato"] = this.saldato !== undefined ? this.saldato : <any>null;
+        data["compensato"] = this.compensato !== undefined ? this.compensato : <any>null;
+        data["saldare"] = this.saldare !== undefined ? this.saldare : <any>null;
+        data["duplicabileAgenzia"] = this.duplicabileAgenzia !== undefined ? this.duplicabileAgenzia : <any>null;
+        data["coverUrl"] = this.coverUrl !== undefined ? this.coverUrl : <any>null;
+        return data;
+    }
+}
+
+export interface IOrderListRow {
+    offertaID?: number;
+    descrizione?: string | null;
+    clienti?: string | null;
+    destinazione?: string | null;
+    creazione?: string;
+    partenza?: string;
+    conferma?: string | null;
+    totale?: number;
+    agenzia?: string | null;
+    telefono?: string | null;
+    email?: string | null;
+    categoriaAgenzia?: string | null;
+    impiegato?: string | null;
+    utentePreventivo?: string | null;
+    utenteConferma?: string | null;
+    annullataTO?: boolean;
+    annullataADV?: boolean;
+    sales?: string | null;
+    pagamento?: string | null;
+    saldato?: number;
+    compensato?: number;
+    saldare?: number;
+    duplicabileAgenzia?: boolean;
+    coverUrl?: string | null;
 }

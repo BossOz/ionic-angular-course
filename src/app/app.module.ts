@@ -12,8 +12,10 @@ import { provideHttpClient } from '@angular/common/http';
 import { ConfigService } from './services/config.service';
 import { environment } from 'src/environments/environment';
 
-export function userFactory(config: ConfigService) {
-	return () => config.from(environment);
+export function userFactory(config: ConfigService, auth: AuthService) {
+	config.from(environment);
+	const p1 = auth.init();
+	return () => Promise.all([p1]);
 }
 
 @NgModule({
@@ -35,7 +37,7 @@ export function userFactory(config: ConfigService) {
 		{
 			provide: APP_INITIALIZER,
 			useFactory: userFactory,
-			deps: [ConfigService],
+			deps: [ConfigService, AuthService],
 			multi: true
 		}
 	],
