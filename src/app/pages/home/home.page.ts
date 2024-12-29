@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService } from '../../services/backend/backend.service';
-import { BehaviorSubject } from 'rxjs';
-import { OrderListRow, SearchOrdersRequest, SearchOrdersResponse } from '../../services/backend/naar-api-client';
+
 import { TripService } from '../../services/trip/trip.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
@@ -11,11 +11,17 @@ import { TripService } from '../../services/trip/trip.service';
 })
 export class HomePage implements OnInit {
 
-	constructor(public tripService: TripService) { }
+	constructor(public tripService: TripService,
+				private authservice: AuthService,
+				private router: Router
+	) { }
 
 	ngOnInit() { 
-		
 		this.tripService.getHomeTrips();
-			
+	}
+
+	public doLogout() {
+		this.authservice.logout();
+		this.router.navigate(['/login']);
 	}
 }

@@ -90,4 +90,12 @@ export class AuthService {
 			return null;
 		}
 	}
+
+	public async logout(): Promise<void> {
+		await this.backend.post<any>('auth/logout', null);
+		this._currentUser = null;
+		this._isLoggedIn = false;
+		this._userChanged.emit();
+		console.log('Logged out');
+	}
 }
